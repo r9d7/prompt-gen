@@ -1,2 +1,16 @@
+# Dependencies
 node_modules
+
+# Build files
 dist
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+*.launch
+.settings/
+
+# System Files
+.DS_Store
+Thumbs.db
