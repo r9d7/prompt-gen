@@ -1,3 +1,4 @@
+import { writeClipboard } from "@solid-primitives/clipboard";
 import { For, JSX, Show, createMemo } from "solid-js";
 import { createStore, reconcile } from "solid-js/store";
 import { Transition } from "solid-transition-group";
@@ -6,7 +7,7 @@ import { Icon } from "~/components/icon";
 
 const WIZARD_STEP_TRANSITION_DURATION = 300;
 
-type WizardStore = {
+type WizardState = {
   currentStep: number;
   steps: {
     prompt: string;
@@ -15,7 +16,7 @@ type WizardStore = {
   }[];
 };
 
-const initialState: WizardStore = {
+const getInitialWizardState: () => WizardState = () => ({
   currentStep: 0,
   steps: [
     {
@@ -41,12 +42,12 @@ const initialState: WizardStore = {
     { prompt: "format the result", placeholder: "as plain text", value: "" },
     { prompt: "follow this example", value: "" },
   ],
-};
+});
 
 export default function App() {
   let inputRef: HTMLInputElement | undefined;
 
-  const [wizard, setWizard] = createStore<WizardStore>(initialState);
+  const [wizard, setWizard] = createStore<WizardState>(getInitialWizardState());
 
   const stepsWithValues = createMemo(() =>
     wizard.steps.filter((step) => Boolean(step.value.length)),
@@ -75,10 +76,17 @@ export default function App() {
     );
   };
 
-  const handleReset = (e: any) => {
-    setWizard(reconcile(initialState, { merge: false }));
+  const handleReset = () => {
+    setWizard(reconcile(getInitialWizardState(), { merge: false }));
   };
-  const handleCopy = () => {};
+  const handleCopy = () => {
+    writeClipboard(
+      stepsWithValues()
+        .map((step) => `${step.prompt} ${step.value}`)
+        .join(", ")
+        .concat("."),
+    );
+  };
 
   return (
     <div class="w-screen min-h-screen flex items-center px-4">
