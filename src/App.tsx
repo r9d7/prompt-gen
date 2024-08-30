@@ -1,5 +1,5 @@
 import { writeClipboard } from "@solid-primitives/clipboard";
-import { For, JSX, Show, createMemo } from "solid-js";
+import { For, JSX, Show, createMemo, createSignal } from "solid-js";
 import { createStore } from "solid-js/store";
 import { Transition } from "solid-transition-group";
 
@@ -48,6 +48,7 @@ export default function App() {
   let inputRef: HTMLInputElement | undefined;
 
   const [wizard, setWizard] = createStore<WizardState>(getInitialWizardState());
+  const [justWroteToClipboard, setJustWroteToClipboard] = createSignal(false);
 
   const stepsWithValues = createMemo(() =>
     wizard.steps.filter((step) => Boolean(step.value.length)),
@@ -86,6 +87,14 @@ export default function App() {
         .join(", ")
         .concat("."),
     );
+
+    setJustWroteToClipboard(true);
+
+    const timeout = setTimeout(() => {
+      setJustWroteToClipboard(false);
+
+      clearTimeout(timeout);
+    }, 1500);
   };
 
   return (
@@ -120,15 +129,20 @@ export default function App() {
                     <h2 class="text-xl text-muted-foreground [&:first-letter]:uppercase">
                       {step.prompt}
                     </h2>
-                    <input
-                      ref={inputRef}
-                      type="text"
-                      placeholder={step.placeholder}
-                      value={step.value}
-                      onInput={handleInput}
-                      onKeyPress={handleKeyPress}
-                      class="text-3xl font-bold bg-transparent border-b border-input py-4"
-                    />
+                    <div class="flex flex-col gap-1">
+                      <input
+                        ref={inputRef}
+                        type="text"
+                        placeholder={step.placeholder}
+                        value={step.value}
+                        onInput={handleInput}
+                        onKeyPress={handleKeyPress}
+                        class="text-3xl font-bold bg-transparent border-b border-input py-4"
+                      />
+                      <small class="text-muted-foreground italic">
+                        Press Enter to go to the next step
+                      </small>
+                    </div>
                   </section>
                 </Show>
               )}
@@ -187,7 +201,9 @@ export default function App() {
                 Reset
               </button>
               <button onClick={handleCopy}>
-                <Icon.copy />
+                <Show when={justWroteToClipboard()} fallback={<Icon.copy />}>
+                  <Icon.check />
+                </Show>
                 Copy
               </button>
             </div>
