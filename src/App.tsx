@@ -177,10 +177,10 @@ export default function App() {
           </div>
         </div>
 
-        <Show when={stepsWithValues().length}>
+        <Show when={stepsWithValues().length && wizard.currentStep > 0}>
           <div class="bg-muted rounded-3xl p-4 space-y-1">
             <span class="text-muted-foreground">Prompt:</span>
-            <p class="italic [&:first-letter]:uppercase">
+            <p class="italic [&:first-letter]:uppercase break-words">
               <For each={stepsWithValues()}>
                 {(step, i) => (
                   <>
