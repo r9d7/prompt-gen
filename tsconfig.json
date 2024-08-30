@@ -12,7 +12,7 @@
     "module": "ESNext",
     "moduleResolution": "node",
     "paths": { "~/*": ["./src/*"] },
-    "types": ["vite/client"],
+    "types": ["vite/client", "unplugin-icons/types/solid"],
 
     // Emit
     "noEmit": true,
