@@ -12,6 +12,7 @@
     "virtual:uno.css",
     "~/components/.*",
     "~/providers/*",
+    "~/lib/*",
     "~/App",
     "~/styles/(.*).css",
     "^[./]"
