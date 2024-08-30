@@ -1,6 +1,6 @@
 import { writeClipboard } from "@solid-primitives/clipboard";
 import { For, JSX, Show, createMemo, createSignal } from "solid-js";
-import { createStore } from "solid-js/store";
+import { createStore, reconcile } from "solid-js/store";
 import { Transition } from "solid-transition-group";
 
 import { Icon } from "~/components/icon";
@@ -16,7 +16,7 @@ type WizardState = {
   }[];
 };
 
-const getInitialWizardState: () => WizardState = () => ({
+const initialWizardState: WizardState = {
   currentStep: 0,
   steps: [
     {
@@ -42,12 +42,14 @@ const getInitialWizardState: () => WizardState = () => ({
     { prompt: "format the result", placeholder: "as plain text", value: "" },
     { prompt: "follow this example", value: "" },
   ],
-});
+};
 
 export default function App() {
   let inputRef: HTMLInputElement | undefined;
 
-  const [wizard, setWizard] = createStore<WizardState>(getInitialWizardState());
+  const [wizard, setWizard] = createStore<WizardState>(
+    structuredClone(initialWizardState),
+  );
   const [justWroteToClipboard, setJustWroteToClipboard] = createSignal(false);
 
   const stepsWithValues = createMemo(() =>
@@ -78,7 +80,7 @@ export default function App() {
   };
 
   const handleReset = () => {
-    setWizard(getInitialWizardState());
+    setWizard(reconcile(initialWizardState, { merge: false }));
   };
   const handleCopy = () => {
     writeClipboard(
