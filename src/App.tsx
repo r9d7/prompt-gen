@@ -1,47 +1,52 @@
 import { For, JSX, Show, createMemo } from "solid-js";
-import { createStore } from "solid-js/store";
+import { createStore, reconcile } from "solid-js/store";
 import { Transition } from "solid-transition-group";
 
+import { Icon } from "~/components/icon";
+
 const WIZARD_STEP_TRANSITION_DURATION = 300;
+
+type WizardStore = {
+  currentStep: number;
+  steps: {
+    prompt: string;
+    placeholder?: string;
+    value: string;
+  }[];
+};
+
+const initialState: WizardStore = {
+  currentStep: 0,
+  steps: [
+    {
+      prompt: "I want you to act as",
+      placeholder: "a motivational coach",
+      value: "",
+    },
+    {
+      prompt: "I will",
+      placeholder: "provide you with information about my goals and challenges",
+      value: "",
+    },
+    {
+      prompt: "and you will",
+      placeholder: "come up with strategies that can help achieve my goals",
+      value: "",
+    },
+    {
+      prompt: "also, you should",
+      placeholder: "provide positive affirmations",
+      value: "",
+    },
+    { prompt: "format the result", placeholder: "as plain text", value: "" },
+    { prompt: "follow this example", value: "" },
+  ],
+};
 
 export default function App() {
   let inputRef: HTMLInputElement | undefined;
 
-  const [wizard, setWizard] = createStore<{
-    currentStep: number;
-    steps: {
-      prompt: string;
-      placeholder?: string;
-      value: string;
-    }[];
-  }>({
-    currentStep: 0,
-    steps: [
-      {
-        prompt: "I want you to act as",
-        placeholder: "a motivational coach",
-        value: "",
-      },
-      {
-        prompt: "I will",
-        placeholder:
-          "provide you with information about my goals and challenges",
-        value: "",
-      },
-      {
-        prompt: "and you will",
-        placeholder: "come up with strategies that can help achieve my goals",
-        value: "",
-      },
-      {
-        prompt: "also, you should",
-        placeholder: "provide positive affirmations",
-        value: "",
-      },
-      { prompt: "format the result", placeholder: "as plain text", value: "" },
-      { prompt: "follow this example", value: "" },
-    ],
-  });
+  const [wizard, setWizard] = createStore<WizardStore>(initialState);
 
   const stepsWithValues = createMemo(() =>
     wizard.steps.filter((step) => Boolean(step.value.length)),
@@ -69,6 +74,11 @@ export default function App() {
       currentStep < wizard.steps.length - 1 ? currentStep + 1 : currentStep,
     );
   };
+
+  const handleReset = (e: any) => {
+    setWizard(reconcile(initialState, { merge: false }));
+  };
+  const handleCopy = () => {};
 
   return (
     <div class="w-screen min-h-screen flex items-center px-4">
@@ -143,7 +153,7 @@ export default function App() {
           </div>
         </div>
 
-        <Show when={stepsWithValues().length}>
+        <Show when={stepsWithValues().length || 1}>
           <div class="bg-muted rounded-3xl p-4 space-y-1">
             <span class="text-muted-foreground">Prompt:</span>
             <p class="italic [&:first-letter]:uppercase">
@@ -156,6 +166,23 @@ export default function App() {
                 )}
               </For>
             </p>
+            <div
+              class={[
+                "flex gap-1",
+                "[&>button]-(flex gap-1 items-center bg-transparent py-1 px-2 rounded-full text-sm)",
+                "[&>button:hover]:bg-background",
+                "[&>button:active]:bg-opacity-70",
+              ].join(" ")}
+            >
+              <button onClick={handleReset}>
+                <Icon.reset />
+                Reset
+              </button>
+              <button onClick={handleCopy}>
+                <Icon.copy />
+                Copy
+              </button>
+            </div>
           </div>
         </Show>
       </main>
