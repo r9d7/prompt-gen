@@ -1,0 +1,32 @@
+:root {
+  --background: 180 4% 91%;
+  --foreground: 220 23% 10%;
+
+  --muted: 0 0% 100%;
+  --muted-foreground: 205 6% 61%;
+
+  --border: var(--muted);
+  --input: var(--muted);
+
+  --ring: var(--foreground);
+
+  --radius: 0.75rem;
+}
+
+body {
+  @apply bg-background text-foreground;
+  @apply font-sans antialiased;
+}
+
+* {
+  @apply border-border;
+  @apply transition-property-colors transition-duration-150 transition-ease-in-out;
+
+  &:focus {
+    @apply focus-(outline-none ring-2 ring-ring ring-offset-2 ring-offset-background);
+  }
+}
+
+#root {
+  @apply min-w-screen min-h-screen;
+}
