@@ -1,0 +1,22 @@
+{
+  "tabWidth": 2,
+  "semi": true,
+  "singleQuote": false,
+  "jsxSingleQuote": false,
+  "trailingComma": "all",
+  "endOfLine": "lf",
+
+  "plugins": ["@trivago/prettier-plugin-sort-imports"],
+  "importOrder": [
+    "@unocss/reset/tailwind-compat.css",
+    "virtual:uno.css",
+    "~/components/.*",
+    "~/providers/*",
+    "~/App",
+    "~/styles/(.*).css",
+    "^[./]"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true,
+  "importOrderGroupNamespaceSpecifiers": true
+}
