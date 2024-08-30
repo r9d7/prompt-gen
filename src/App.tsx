@@ -100,7 +100,7 @@ export default function App() {
   };
 
   return (
-    <div class="w-screen min-h-screen flex items-center px-4">
+    <div class="w-screen min-h-screen flex items-center p-4">
       <main class="w-full max-w-screen-md mx-auto space-y-8">
         <div class="space-y-4">
           <Transition
@@ -127,8 +127,8 @@ export default function App() {
             <For each={wizard.steps}>
               {(step, i) => (
                 <Show when={i() === wizard.currentStep}>
-                  <section class="flex flex-col gap-4">
-                    <h2 class="text-xl text-muted-foreground [&:first-letter]:uppercase">
+                  <section class="flex flex-col md:gap-4">
+                    <h2 class="md:text-xl text-muted-foreground [&:first-letter]:uppercase">
                       {step.prompt}
                     </h2>
                     <div class="flex flex-col gap-1">
@@ -139,7 +139,7 @@ export default function App() {
                         value={step.value}
                         onInput={handleInput}
                         onKeyPress={handleKeyPress}
-                        class="text-3xl font-bold bg-transparent border-b border-input py-4"
+                        class="text-xl md:text-3xl font-bold bg-transparent border-b border-input py-4"
                       />
                       <small class="text-muted-foreground italic">
                         Press Enter to go to the next step
