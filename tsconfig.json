@@ -11,14 +11,12 @@
     // Modules
     "module": "ESNext",
     "moduleResolution": "node",
-    "paths": {
-      "~/*": ["./src/*"]
-    },
+    "paths": { "~/*": ["./src/*"] },
     "types": ["vite/client"],
 
     // Emit
     "noEmit": true,
-    
+
     // Interop Constraints
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
