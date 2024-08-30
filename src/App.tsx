@@ -1,6 +1,6 @@
 import { writeClipboard } from "@solid-primitives/clipboard";
 import { For, JSX, Show, createMemo } from "solid-js";
-import { createStore, reconcile } from "solid-js/store";
+import { createStore } from "solid-js/store";
 import { Transition } from "solid-transition-group";
 
 import { Icon } from "~/components/icon";
@@ -77,7 +77,7 @@ export default function App() {
   };
 
   const handleReset = () => {
-    setWizard(reconcile(getInitialWizardState(), { merge: false }));
+    setWizard(getInitialWizardState());
   };
   const handleCopy = () => {
     writeClipboard(
@@ -161,7 +161,7 @@ export default function App() {
           </div>
         </div>
 
-        <Show when={stepsWithValues().length || 1}>
+        <Show when={stepsWithValues().length}>
           <div class="bg-muted rounded-3xl p-4 space-y-1">
             <span class="text-muted-foreground">Prompt:</span>
             <p class="italic [&:first-letter]:uppercase">
