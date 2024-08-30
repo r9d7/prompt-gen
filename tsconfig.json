@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    // Language and Environment
+    "target": "ESNext",
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js",
+
+    // Type Checking
+    "strict": true,
+
+    // Modules
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "paths": {
+      "~/*": ["./src/*"]
+    },
+    "types": ["vite/client"],
+
+    // Emit
+    "noEmit": true,
+    
+    // Interop Constraints
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "forceConsistentCasingInFileNames": true
+  }
+}
