@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@solid-primitives/clipboard':
+        specifier: ^1.5.10
+        version: 1.5.10(solid-js@1.8.11)
       '@unocss/reset':
         specifier: ^0.62.3
         version: 0.62.3
@@ -808,6 +811,11 @@ packages:
 
   '@solid-primitives/bounds@0.0.118':
     resolution: {integrity: sha512-Qj42w8LlnhJ3r/t+t0c0vrdwIvvQMPgjEFGmLiwREaA85ojLbgL9lSBq2tKvljeLCvRVkgj10KEUf+vc99VCIg==}
+    peerDependencies:
+      solid-js: ^1.6.12
+
+  '@solid-primitives/clipboard@1.5.10':
+    resolution: {integrity: sha512-ohwlrBP4j+Qjksg01CFWaP/USpzX78dBNVA1DPRZkf/vJgytX0T6KMc2YxF6o8fs6ePIYSI8Nt3sKxF0sh1q+Q==}
     peerDependencies:
       solid-js: ^1.6.12
 
@@ -2344,6 +2352,11 @@ snapshots:
       '@solid-primitives/event-listener': 2.3.3(solid-js@1.8.11)
       '@solid-primitives/resize-observer': 2.0.26(solid-js@1.8.11)
       '@solid-primitives/static-store': 0.0.5(solid-js@1.8.11)
+      '@solid-primitives/utils': 6.2.3(solid-js@1.8.11)
+      solid-js: 1.8.11
+
+  '@solid-primitives/clipboard@1.5.10(solid-js@1.8.11)':
+    dependencies:
       '@solid-primitives/utils': 6.2.3(solid-js@1.8.11)
       solid-js: 1.8.11
 
